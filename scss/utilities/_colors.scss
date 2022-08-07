@@ -1,0 +1,80 @@
+$color-1: #aa956f;
+$color-2: #119da4;
+$color-3: #0c7489;
+$color-4: #1C7C54;
+$color-5: #1C1C1C;
+$color-6: #EDF2EF;
+$color-7: #cd7415;
+
+$vuetify-primary: #007BFF;
+$vuetify-secondary: #424242;
+$vuetify-accent: #82B1FF;
+$vuetify-error: #FF5252;
+$vuetify-info: #2196F3;
+$vuetify-success: #4CAF50;
+$vuetify-warning: #FFC107;
+
+$lighten: 10%;
+$darken: -25%;
+
+$colors: (
+  "gold": (
+    base: $color-1,
+    light: scale-color($color-1, $lightness: $lighten),
+    dark: scale-color($color-1, $lightness: $darken),
+  ),
+  "turquoise": (
+    base: $color-2,
+    light: scale-color($color-2, $lightness: $lighten),
+    dark: scale-color($color-2, $lightness: $darken),
+  ),
+  "blue": (
+    base: $color-3,
+    light: scale-color($color-3, $lightness: $lighten),
+    dark: scale-color($color-3, $lightness: $darken),
+  ),
+  "green": (
+    base: $color-4,
+    light: scale-color($color-4, $lightness: $lighten),
+    dark: scale-color($color-4, $lightness: $darken),
+  ),
+  "dark": (
+    base: $color-5,
+    light: scale-color($color-5, $lightness: $lighten),
+    dark: scale-color($color-5, $lightness: $darken),
+  ),
+  "light": (
+    base: $color-6,
+    light: scale-color($color-6, $lightness: $lighten),
+    dark: scale-color($color-6, $lightness: $darken),
+  ),
+  "iason": (
+    base: $color-7,
+    light: scale-color($color-7, $lightness: $lighten),
+    dark: scale-color($color-7, $lightness: $darken),
+  ),
+);
+
+@function get($color, $level: base) {
+  $color: map-get(
+    $map:
+      map-get(
+        $map: $colors,
+        $key: $color,
+      ),
+    $key: $level,
+  );
+  @return $color;
+}
+
+@function getColorWithOpacity($color, $level: base, $opacity) {
+  $color: map-get(
+    $map:
+      map-get(
+        $map: $colors,
+        $key: $color,
+      ),
+    $key: $level,
+  );
+  @return rgba($color, $opacity);
+}

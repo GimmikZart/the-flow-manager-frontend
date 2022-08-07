@@ -1,0 +1,303 @@
+@use "./colors" as colors;
+@use "./fonts" as fonts;
+/* DISPLAY -----------------------------------------------*/
+
+.d-block {
+  display: block !important;
+}
+.d-none {
+  display: none !important;
+}
+
+.no-flex {
+  flex: none !important;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.relative {
+  position: relative;
+}
+.absolute {
+  position: absolute !important;
+}
+.fixed {
+  position: fixed;
+}
+
+.top-left {
+  top: 0;
+  left: 0;
+}
+
+.top-right {
+  top: 0;
+  right: 0;
+}
+
+.flex-default {
+  flex: 1 1 auto !important;
+}
+
+@for $i from 1 through 12 {
+  .flex-#{$i} {
+    flex: $i !important;
+  }
+}
+
+/* BLOCK DIMENSIONS -------------------------------------- */
+
+/* height */
+.no-max-height {
+  max-height: unset !important;
+}
+
+@for $i from 1 through 20 {
+  .vh-#{$i * 5} {
+    height: $i * 5vh !important;
+  }
+}
+
+.h-auto {
+  height: auto;
+}
+
+@for $i from 1 through 20 {
+  .h-#{$i * 5} {
+    height: $i * 5% !important;
+  }
+}
+
+/* width */
+.w-auto {
+  width: auto;
+}
+
+@for $i from 1 through 20 {
+  .vw-#{$i * 5} {
+    width: $i * 5vh !important;
+  }
+}
+
+.w-auto {
+  width: auto;
+}
+
+@for $i from 1 through 20 {
+  .w-#{$i * 5} {
+    width: $i * 5% !important;
+  }
+}
+
+/* FONT --------------------------------------------------- */
+
+.font-size-h1 {
+  font-size: fonts.getSize(h1);
+}
+
+.font-size-h2 {
+  font-size: fonts.getSize(h2);
+}
+
+.font-size-h3 {
+  font-size: fonts.getSize(h3);
+}
+
+.font-size-h4 {
+  font-size: fonts.getSize(h4);
+}
+
+.font-size-h5 {
+  font-size: fonts.getSize(h5);
+}
+
+.font-size-p {
+  font-size: fonts.getSize(p);
+}
+
+.font-size-small {
+  font-size: fonts.getSize(small);
+}
+
+.text-center {
+  text-align: center;
+}
+.text-left {
+  text-align: left;
+}
+.text-end {
+  text-align: right;
+}
+.text-continuer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, white 80%);
+}
+
+/* font weight */
+.font-bold {
+  font-weight: 700 !important;
+}
+.font-light {
+  font-weight: 200 !important;
+}
+.font-normal {
+  font-weight: 400 !important;
+}
+.font-italic {
+  font-style: italic;
+}
+
+.c-gold {
+  color: colors.get("gold");
+}
+/* OVERFLOW */
+
+.overflow-auto {
+  overflow: auto;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-x-hidden {
+  overflow-x: hidden;
+}
+
+.no-text-overflow {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* RADIUS */
+
+.rounded-pill {
+  border-radius: 28px;
+}
+
+.medium-pill {
+  border-radius: 10px;
+}
+
+.light-pill {
+  border-radius: 4px;
+}
+
+.circle {
+  border-radius: 100%;
+}
+
+.plain {
+  border-radius: 0 !important;
+}
+
+.square {
+  aspect-ratio: 1 / 1;
+}
+
+/* BORDERS */
+.eshtes-border {
+  border: 1px solid colors.get("gold", light) !important;
+}
+.no-border {
+  border: none !important;
+}
+
+/* ESTHETICS */
+.box-shadow-none {
+  box-shadow: none;
+}
+
+.shadow-on {
+  box-shadow: 3px 4px 4px 0px hsla(0, 0%, 0%, 0.05) !important;
+}
+
+.opacity-full {
+  opacity: 1 !important;
+}
+.opacity-none {
+  opacity: 0 !important;
+}
+.opacity-half {
+  opacity: 0.5 !important;
+}
+
+.reset-list-style {
+  list-style: none;
+}
+
+.reset-outline {
+  outline: none;
+  resize: none;
+}
+.reset-outline:focus {
+  outline: none;
+  resize: none;
+}
+
+.reset-link-style {
+  text-decoration: none;
+}
+
+.translate-up-y {
+  transform: translateY(-100%);
+}
+
+.text-truncated {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.pointer {
+  cursor: pointer !important;
+}
+
+.pointer-reset {
+  cursor: unset;
+}
+
+/* TRICK */
+
+.v-window__container {
+  height: 100% !important;
+}
+
+.v-main__wrap {
+  height: 100%;
+}
+
+.v-data-table.v-data-table--fixed-header {
+  .v-data-table__wrapper {
+    height: 100% !important; // prima -> height: calc(100% - 60px) !important;
+  }
+}
+
+.v-data-table__wrapper {
+  height: calc(100% - 60px) !important;
+}
+
+.theme--light.v-data-table > .v-data-table__wrapper > table > tbody > tr:hover:not(.v-data-table__expanded__content):not(.v-data-table__empty-wrapper) {
+  background-color: colors.getColorWithOpacity("iason", base, 0.05) !important;
+}
+
+/* .theme--light.v-list-item:hover::before {
+  background-color: colors.getColorWithOpacity("iason", base, 0.25) !important;
+  opacity: 1;
+}
+
+.theme--light.v-list-item:focus::before {
+  background-color: colors.getColorWithOpacity("iason", base, 0.4) !important;
+  opacity: 1;
+}
+
+.theme--light.v-list-item:active::before {
+  background-color: colors.getColorWithOpacity("iason", base, 0.6) !important;
+  opacity: 1;
+} */
