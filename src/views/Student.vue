@@ -2,9 +2,7 @@
   <div class="main-container">
     <v-app-bar dense flat app>
       <v-spacer></v-spacer>
-      <v-btn depressed color="blue" @click="dialog = true">
-        EDIT
-      </v-btn>
+
     </v-app-bar>
 
     <v-container fluid>
@@ -70,8 +68,13 @@
     </v-container> -->
     <v-container fluid class="d-flex justify-space-around">
       <v-card class="w-30">
-        <v-card-title class="justify-center pa-2">
+        <v-card-title class="justify-space-between pa-2">
           INFORMAZIONI
+          <v-btn v-if="!editInfo" @click="editInfo = true">EDIT</v-btn>
+          <div v-if="editInfo">
+            <v-btn @click="editInfo = false">ANNULLA</v-btn>
+            <v-btn @click="saveEditInfo()">SALVA</v-btn>
+          </div>
         </v-card-title>
         <v-divider></v-divider>
         <v-list class="pa-0">
@@ -83,7 +86,8 @@
               NOME
             </v-list-item-icon>
             <v-list-item-content class="justify-end">
-              {{student.name}}
+              <v-text-field v-if="editInfo" v-model="student.name" hide-details class="ma-0 pa-0" outlined dense></v-text-field>
+              <span v-else class="text-end">{{student.name}}</span>
             </v-list-item-content>
           </v-list-item>
           <v-divider></v-divider>
@@ -160,13 +164,72 @@
           </v-list-item>
         </v-list>
       </v-card>
+
       <v-card class="w-30">
         <v-card-title class="justify-center pa-2">
           CORSI
         </v-card-title>
-        <v-divider class="mb-3"></v-divider>
+        <v-divider></v-divider>
+        <v-tabs v-model="coursesTab" grow>
+          <v-tabs-slider color="blue"></v-tabs-slider>
+          <v-tab>
+            ATTIVI
+          </v-tab>
+          <v-tab>
+            PASSATI
+          </v-tab>
+        </v-tabs>
+        <v-tabs-items v-model="coursesTab">
+          <v-tab-item>
+            <div class="d-flex justify-space-between align-center mt-3 pr-5 pl-5">
+              <h6>Corso</h6>
+              <h6>Start</h6>
+              <h6>End</h6>
+            </div>
+            <v-list class="pa-0">
+              <template v-for="(course, index) in student.courses">
+                <v-divider :key="index"></v-divider>
+                <v-list-item :key="index" v-if="course.pivot.active == 0">
+                  <v-list-item-icon>
+                    {{course.name}}
+                  </v-list-item-icon>
+                  <v-list-item-content class="justify-end">
+                    {{course.pivot.start_date}}
+                  </v-list-item-content>
+                  <v-list-item-content class="justify-end">
+                    {{course.pivot.end_date ? course.pivot.end_date : 'on going'}}
+                  </v-list-item-content>
+                </v-list-item>
+              </template>
+            </v-list>
+          </v-tab-item>
 
+          <v-tab-item>
+            <div class="d-flex justify-space-between align-center mt-3 pr-5 pl-5">
+              <h6>Corso</h6>
+              <h6>Start</h6>
+              <h6>End</h6>
+            </div>
+            <v-list class="pa-0">
+              <template v-for="(course, index) in student.courses">
+                <v-divider :key="index"></v-divider>
+                <v-list-item :key="index" v-if="course.pivot.active == 1">
+                  <v-list-item-icon>
+                    {{course.name}}
+                  </v-list-item-icon>
+                  <v-list-item-content class="justify-end">
+                    {{course.pivot.start_date}}
+                  </v-list-item-content>
+                  <v-list-item-content class="justify-end">
+                    {{course.pivot.end_date}}
+                  </v-list-item-content>
+                </v-list-item>
+              </template>
+            </v-list>
+          </v-tab-item>
+        </v-tabs-items>
       </v-card>
+
       <v-card class="w-30">
         <v-card-title class="justify-center pa-2">
           PAGAMENTI
@@ -184,12 +247,27 @@ export default {
   props: ['id'],
   data: () => ({
     student: {},
-    tab: 0
+    coursesTab: 0,
+    activeCourses: [],
+    pastCourses: [],
+
+    editInfo: false
+
   }),
   methods: {
     async getStudent () {
-      this.student = (await Axios.get(`http://localhost:8000/api/student/${this.id}`)).data.data
+      this.student = (await Axios.get(`http://localhost:8000/api/student/${this.id}`)).data
       console.log(this.student)
+      this.splitCourses()
+    },
+    splitCourses () {
+      this.student.courses.forEach(element => {
+        if (element.pivot.active === 0) {
+          this.activeCourses.push(element)
+        } else {
+          this.pastCourses.push(element)
+        }
+      })
     }
   },
   created () {
