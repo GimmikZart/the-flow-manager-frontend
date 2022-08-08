@@ -50,7 +50,8 @@ export default {
     router: [
       { title: 'Dashboard', icon: 'mdi-view-dashboard', to: '/dashboard' },
       { title: 'Studenti', icon: 'mdi-image', to: '/studenti' },
-      { title: 'Insegnanti', icon: 'mdi-help-box', to: '/insegnanti' }
+      { title: 'Insegnanti', icon: 'mdi-help-box', to: '/insegnanti' },
+      { title: 'Corsi', icon: 'mdi-help-box', to: '/corsi' }
     ]
   })
 }

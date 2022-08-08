@@ -1,22 +1,19 @@
 <template>
   <div class="main-container">
-    <v-app-bar dense flat app class="d-flex w-100 align-center">
+    <v-app-bar dense flat app>
       <v-text-field
         v-model="searchTeachers"
-        label="Search (UPPER CASE ONLY)"
+        label="Cerca Insegnante"
+        background-color="white"
         outlined
         dense
         hide-details
-        class="w-50"
+        class="col-4"
       ></v-text-field>
-      <v-text-field
-        v-model="searchTeachers"
-        label="Search (UPPER CASE ONLY)"
-        outlined
-        dense
-        hide-details
-        class="w-50"
-      ></v-text-field>
+      <v-spacer></v-spacer>
+      <v-btn depressed color="blue" to="/aggiungi-insegnante">
+        AGGIUNGI INSEGNANTE
+      </v-btn>
     </v-app-bar>
 
     <v-data-table
@@ -25,6 +22,7 @@
       :search="searchTeachers"
       hide-default-footer
       fixed-header
+      disable-pagination
       class="elevation-1 h-100"
     >
     </v-data-table>

@@ -23,9 +23,30 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/Students.vue')
   },
   {
+    path: '/studente/:id',
+    name: 'Studente',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Student.vue'),
+    props: true
+  },
+  {
+    path: '/aggiungi-studente',
+    name: 'AddStudent',
+    component: () => import(/* webpackChunkName: "about" */ '../views/AddStudent.vue')
+  },
+  {
     path: '/insegnanti',
     name: 'Insegnanti',
     component: () => import(/* webpackChunkName: "about" */ '../views/Teachers.vue')
+  },
+  {
+    path: '/aggiungi-insegnante',
+    name: 'AddTeacher',
+    component: () => import(/* webpackChunkName: "about" */ '../views/AddTeacher.vue')
+  },
+  {
+    path: '/corsi',
+    name: 'Corsi',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Courses.vue')
   }
 ]
 

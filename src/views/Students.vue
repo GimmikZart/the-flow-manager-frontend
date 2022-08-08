@@ -1,14 +1,33 @@
 <template>
   <div class="main-container">
-    <v-app-bar dense flat app></v-app-bar>
+    <v-app-bar dense flat app>
+      <v-text-field
+        v-model="searchStudents"
+        label="Cerca Studente"
+        background-color="white"
+        outlined
+        dense
+        hide-details
+        class="col-4"
+      ></v-text-field>
+      <v-spacer></v-spacer>
+      <v-btn depressed color="blue" to="/aggiungi-studente">
+        AGGIUNGI STUDENTE
+      </v-btn>
+    </v-app-bar>
 
     <v-data-table
       :headers="headers"
       :items="students"
+      :search="searchStudents"
       hide-default-footer
       fixed-header
+      disable-pagination
       class="elevation-1 h-100"
     >
+      <template v-slot:[`item.action`]="{ item }">
+          <v-btn :to="`/studente/${item.id}`">INFO</v-btn>
+      </template>
     </v-data-table>
   </div>
 </template>
@@ -50,9 +69,11 @@ export default {
         text: 'Scadenza Pagamento', align: 'start', sortable: false, value: 'paymentExpiry'
       },
       {
-        text: 'Azioni', align: 'start', sortable: false
+        text: 'Azioni', align: 'start', sortable: false, value: 'action'
       }
-    ]
+    ],
+
+    searchStudents: ''
   }),
   methods: {
     async getStudents () {
