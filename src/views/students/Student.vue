@@ -20,52 +20,6 @@
         </div>
       </div>
     </v-container>
-    <!-- <v-container fluid>
-      <v-tabs v-model="tab" grow>
-        <v-tabs-slider color="blue"></v-tabs-slider>
-        <v-tab>
-          INFORMAZIONI
-        </v-tab>
-        <v-tab>
-          CORSI
-        </v-tab>
-        <v-tab>
-          PAGAMENTI
-        </v-tab>
-      </v-tabs>
-      <v-tabs-items v-model="tab">
-        <v-tab-item>
-          <div>
-            Nome: {{student.name}}
-          </div>
-          <div>
-            Cognome: {{student.lastname}}
-          </div>
-          <div>
-            Gender: {{student.gender}}
-          </div>
-          <div>
-            Data di nascita: {{student.dateOfBirth}}
-          </div>
-          <div>
-            Registrato: {{student.registered}}
-          </div>
-          <div>
-            Email: {{student.email}}
-          </div>
-          <div>
-            Telefono: {{student.telephone}}
-          </div>
-        </v-tab-item>
-        <v-tab-item>
-          CORSIIIIIIIIIIIII
-        </v-tab-item>
-        <v-tab-item>
-          PAGAMENTIIIIIIIIIIIIIIII
-        </v-tab-item>
-      </v-tabs-items>
-
-    </v-container> -->
     <v-container fluid class="d-flex justify-space-around">
       <v-card class="w-30">
         <v-card-title class="justify-space-between pa-2">
