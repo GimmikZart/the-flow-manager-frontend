@@ -25,6 +25,9 @@
       disable-pagination
       class="elevation-1 h-100"
     >
+      <template v-slot:[`item.action`]="{ item }">
+          <v-btn :to="`/insegnante/${item.id}`">INFO</v-btn>
+      </template>
     </v-data-table>
   </div>
 </template>
@@ -60,7 +63,7 @@ export default {
         text: 'Telefono', align: 'start', sortable: false, value: 'telephone'
       },
       {
-        text: 'Azioni', align: 'start', sortable: false
+        text: 'Azioni', align: 'start', sortable: false, value: 'action'
       }
     ],
     searchTeachers: ''

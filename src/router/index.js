@@ -20,28 +20,34 @@ const routes = [
   {
     path: '/studenti',
     name: 'Studenti',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Students.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/students/Students.vue')
   },
   {
     path: '/studente/:id',
     name: 'Studente',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Student.vue'),
+    component: () => import(/* webpackChunkName: "about" */ '../views/students/Student.vue'),
     props: true
   },
   {
     path: '/aggiungi-studente',
     name: 'AddStudent',
-    component: () => import(/* webpackChunkName: "about" */ '../views/AddStudent.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/students/AddStudent.vue')
   },
   {
     path: '/insegnanti',
-    name: 'Insegnanti',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Teachers.vue')
+    name: 'Teachers',
+    component: () => import(/* webpackChunkName: "about" */ '../views/teachers/Teachers.vue')
+  },
+  {
+    path: '/insegnante/:id',
+    name: 'Teacher',
+    component: () => import(/* webpackChunkName: "about" */ '../views/teachers/Teacher.vue'),
+    props: true
   },
   {
     path: '/aggiungi-insegnante',
     name: 'AddTeacher',
-    component: () => import(/* webpackChunkName: "about" */ '../views/AddTeacher.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/teachers/AddTeacher.vue')
   },
   {
     path: '/corsi',
