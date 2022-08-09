@@ -68,7 +68,7 @@
 import Axios from 'axios'
 export default {
   name: 'InfoCard',
-  props: ['editInfo', 'student'],
+  props: ['editInfo', 'student', 'editStudent'],
   data: () => ({
     infoList: [
       {
@@ -124,17 +124,14 @@ export default {
   },
   methods: {
     async saveEditInfo () {
-      console.log('edit save', this.editStudent)
-      console.log(this.student.id)
       const response = await Axios.post('http://localhost:8000/api/student-edit', this.editStudent)
       this.$emit('update-student-info', false)
-      console.log({ response })
+      console.log(response)
     },
     undoEdit () {
       this.editStudent = JSON.parse(JSON.stringify(this.student))
       this.editInfo = false
-      this.$emit('undo-edit-info', false)
-      console.log('undo edit', this.editStudent)
+      this.$emit('undo-edit-info')
     }
   }
 }
