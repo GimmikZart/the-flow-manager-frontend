@@ -21,8 +21,8 @@
       </div>
       <div class="h-50 w-60 d-flex justify-space-around">
         <v-btn class="h-100 w-25" :disabled="editInfo == true" @click="editInfo = true">EDIT INFO</v-btn>
-        <v-btn class="h-100 w-25">EDIT CORSI</v-btn>
-        <v-btn class="h-100 w-25">EDIT PAGAMENTI</v-btn>
+        <v-btn class="h-100 w-25" :disabled="editCourses == true" @click="editCourses = true">EDIT CORSI</v-btn>
+        <v-btn class="h-100 w-25" :disabled="editPayments == true" @click="editPayments = true">EDIT PAGAMENTI</v-btn>
       </div>
     </v-container>
     <v-container fluid class="d-flex h-70 justify-space-around">
@@ -35,11 +35,18 @@
       </InfoCard>
 
       <CoursesCard
-        :studentCourses="student.courses">
+        :studentCourses="student.courses"
+        :editCourses="editCourses"
+        :student-id="student.id"
+        @undo-edit-courses="editCourses = false"
+        @update-course-list="getStudent(); editCourses = false">
       </CoursesCard>
 
       <PaymentCard
-        :studentPayments="student.payments">
+        :studentPayments="student.payments"
+        :editPayments="editPayments"
+        @update-course-list="getStudent();"
+        @undo-edit-courses="editPayments = false">
       </PaymentCard>
     </v-container>
   </div>
@@ -48,8 +55,8 @@
 import InfoCard from '@/components/student/InfoCard.vue'
 import CoursesCard from '@/components/student/CoursesCard.vue'
 import PaymentCard from '@/components/student/PaymentsCard.vue'
-
 import Axios from 'axios'
+
 export default {
   name: 'Student',
   props: ['id'],
@@ -61,7 +68,9 @@ export default {
   data: () => ({
     student: {},
     paymentTab: 0,
-    editInfo: false
+    editInfo: false,
+    editCourses: false,
+    editPayments: false
   }),
   methods: {
     async getStudent () {

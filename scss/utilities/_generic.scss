@@ -201,11 +201,16 @@
 }
 
 /* BORDERS */
-.eshtes-border {
-  border: 1px solid colors.get("gold", light) !important;
+.border-thin {
+  border: 1px solid black !important;
 }
 .no-border {
   border: none !important;
+}
+
+/* BACKGROUNDS */
+.bc-color-black {
+  background-color: black;
 }
 
 /* ESTHETICS */

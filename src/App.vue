@@ -11,7 +11,7 @@
           </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
-
+      <v-btn @click="updatePayments()">AGGIORNA</v-btn>
       <v-divider></v-divider>
 
       <v-list
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-
+import Axios from 'axios'
 export default {
   name: 'App',
 
@@ -53,7 +53,13 @@ export default {
       { title: 'Insegnanti', icon: 'mdi-help-box', to: '/insegnanti' },
       { title: 'Corsi', icon: 'mdi-help-box', to: '/corsi' }
     ]
-  })
+  }),
+  methods: {
+    async updatePayments () {
+      const paymentsResponse = (await Axios.get('http://localhost:8000/api/check-payments')).data
+      console.log({ paymentsResponse })
+    }
+  }
 }
 </script>
 <style lang="scss">

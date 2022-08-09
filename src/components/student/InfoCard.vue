@@ -66,6 +66,7 @@
 </template>
 <script>
 import Axios from 'axios'
+import { GenderEnumeration } from '@/utility/enumerations.js'
 export default {
   name: 'InfoCard',
   props: ['editInfo', 'student', 'editStudent'],
@@ -120,6 +121,7 @@ export default {
   watch: {
     student () {
       this.editStudent = JSON.parse(JSON.stringify(this.student))
+      this.student.gender = GenderEnumeration.codeToLabel(this.student.gender)
     }
   },
   methods: {
@@ -136,3 +138,9 @@ export default {
   }
 }
 </script>
+<style scoped>
+  ::v-deep .theme--light.v-input--switch .v-input--switch__track,
+  ::v-deep .theme--light.v-input--switch .v-input--switch__thumb{
+    color: blue;
+  }
+</style>

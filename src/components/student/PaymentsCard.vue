@@ -1,7 +1,10 @@
 <template>
   <v-card class="w-30">
-    <v-card-title class="justify-center pa-2">
+    <v-card-title class="pa-2" :class="{ 'justify-space-between': editPayments, 'justify-center': !editPayments }">
       PAGAMENTI
+      <div v-if="editPayments" class="ml-3">
+        <v-btn @click="undoEditPayments()" class="mr-2">ANNULLA</v-btn>
+      </div>
     </v-card-title>
     <v-divider></v-divider>
     <v-tabs v-model="paymentTab" grow>
@@ -35,7 +38,8 @@
                 {{payment.month}}/{{payment.year}}
               </v-list-item-content>
               <v-list-item-content class="justify-end">
-                <v-btn>PAGA</v-btn>
+                <v-btn v-if="!editPayments" @click="payCourse(payment.id)">PAGA</v-btn>
+                <v-btn v-else @click="cancelPayment(payment.id)">ANNULLA</v-btn>
               </v-list-item-content>
             </v-list-item>
             <v-divider :key="index"></v-divider>
@@ -48,7 +52,8 @@
           <h6>Corso</h6>
           <h6>Prezzo</h6>
           <h6>Periodo</h6>
-          <h6>Pagato il</h6>
+          <h6>Eseguito il</h6>
+          <h6>Status</h6>
         </div>
         <v-divider></v-divider>
         <v-list class="pa-0">
@@ -66,6 +71,9 @@
               <v-list-item-content class="justify-end">
                 {{payment.date_of_payment}}
               </v-list-item-content>
+              <v-list-item-content class="justify-end">
+                {{formatStatus(payment.status) }}
+              </v-list-item-content>
             </v-list-item>
             <v-divider :key="index"></v-divider>
           </template>
@@ -75,9 +83,11 @@
   </v-card>
 </template>
 <script>
+import Axios from 'axios'
+import { PaymentStatusEnumeration } from '@/utility/enumerations.js'
 export default {
   name: 'PaymentsCard',
-  props: ['studentPayments'],
+  props: ['studentPayments', 'editPayments'],
   data: () => ({
     paymentTab: 0,
     unpayedCourse: [],
@@ -90,6 +100,8 @@ export default {
   },
   methods: {
     splitPayments () {
+      this.unpayedCourse = []
+      this.paidCourse = []
       this.studentPayments.forEach(element => {
         if (element.date_of_payment == null) {
           this.unpayedCourse.push(element)
@@ -97,6 +109,22 @@ export default {
           this.paidCourse.push(element)
         }
       })
+    },
+    async payCourse (paymentId) {
+      const response = await Axios.post(`http://localhost:8000/api/pay-course/${paymentId}`)
+      console.log({ response })
+      this.$emit('update-course-list')
+    },
+    async cancelPayment (paymentId) {
+      const response = await Axios.post(`http://localhost:8000/api/cancel-payment/${paymentId}`)
+      console.log({ response })
+      this.$emit('update-course-list')
+    },
+    undoEditPayments () {
+      this.$emit('undo-edit-courses')
+    },
+    formatStatus (status) {
+      return PaymentStatusEnumeration.codeToLabel(status)
     }
   }
 }
