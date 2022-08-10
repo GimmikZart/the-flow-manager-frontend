@@ -57,7 +57,9 @@ export default {
   methods: {
     async updatePayments () {
       const paymentsResponse = (await Axios.get('http://localhost:8000/api/check-payments')).data
+      const salariesResponse = (await Axios.get('http://localhost:8000/api/check-salaries')).data
       console.log({ paymentsResponse })
+      console.log({ salariesResponse })
     }
   }
 }

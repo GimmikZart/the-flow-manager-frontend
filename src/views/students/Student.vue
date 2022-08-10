@@ -37,7 +37,7 @@
       <CoursesCard
         :studentCourses="student.courses"
         :editCourses="editCourses"
-        :student-id="student.id"
+        :student-id="student.students_id"
         @undo-edit-courses="editCourses = false"
         @update-course-list="getStudent(); editCourses = false">
       </CoursesCard>
@@ -76,6 +76,7 @@ export default {
     async getStudent () {
       this.student = (await Axios.get(`http://localhost:8000/api/student/${this.id}`)).data
       this.editStudent = JSON.parse(JSON.stringify(this.student))
+      console.log(this.student)
     }
   },
   created () {

@@ -1,5 +1,5 @@
 <template>
-  <v-card class="w-30">
+  <v-card class="w-35">
     <v-card-title class="pa-2" :class="{ 'justify-space-between': editCourses, 'justify-center': !editCourses }">
       CORSI
       <div v-if="editCourses" class="ml-3">
@@ -18,12 +18,6 @@
     </v-tabs>
     <v-tabs-items v-model="coursesTab">
       <v-tab-item>
-        <div class="d-flex justify-space-between align-center mt-3 pr-5 pl-5">
-          <h6>Corso</h6>
-          <h6>Start</h6>
-          <h6>End</h6>
-        </div>
-        <v-divider></v-divider>
         <v-btn v-if="editCourses" :disabled="addCourseField" color="blue" class="w-100 white--text" @click="createCourseField()">AGGIUNGI CORSO</v-btn>
         <div v-if="addCourseField" class="mb-2 pa-5">
           <v-divider class="mb-3"></v-divider>
@@ -56,57 +50,54 @@
               ></v-date-picker>
             </v-menu>
           </div>
+          <div class="d-flex">
+            <v-select class="w-100" label="Tipo di accordo" v-model="addCourse.type" outlined dense hide-details :items="typesList"></v-select>
+            <v-text-field type="num" v-model="addCourse.unit" label="Unità" outlined dense hide-details></v-text-field>
+          </div>
 
           <div class="d-flex mt-2">
             <v-btn color="red" class="w-50 white--text" @click="undoAddCourse()">ANNULLA</v-btn>
             <v-btn color="green" class="w-50 white--text" @click="saveNewCourse()">SALVA </v-btn>
           </div>
-
           <v-divider class="mt-3"></v-divider>
         </div>
-        <v-list class="pa-0">
-          <template v-for="(course, index) in activeCourses">
-            <v-list-item :key="index">
-              <v-list-item-icon>
-                {{course.name}}
-              </v-list-item-icon>
-              <v-list-item-content class="justify-end">
-                {{course.start_date}}
-              </v-list-item-content>
-              <v-list-item-content class="justify-end">
-                <v-btn color="red" class="white--text" v-if="editCourses" @click="endCourse(course.id)">TERMINA</v-btn>
-                <span v-else class="text-end">on going</span>
-              </v-list-item-content>
-            </v-list-item>
-            <v-divider :key="index"></v-divider>
+        <v-data-table
+          :headers="courseHeaders"
+          :items="activeCourses"
+          hide-default-footer
+          fixed-header
+          disable-pagination>
+          <template v-slot:[`item.type`]="{ item }">
+              <span>{{agreementEnumeration(item.type)}}</span>
           </template>
-        </v-list>
+          <template v-slot:[`item.unit`]="{ item }">
+            <span>{{item.unit}} {{formatType(item.type)}}</span>
+          </template>
+          <template v-slot:[`item.end_date`]="{ item }">
+            <span v-if="!editCourses"> on going</span>
+            <v-btn v-else color="red" class="white--text"  @click="endCourse(item.courses_teachers_id)">TERMINA</v-btn>
+          </template>
+        </v-data-table>
       </v-tab-item>
 
       <v-tab-item>
-        <div class="d-flex justify-space-between align-center mt-3 pr-5 pl-5">
-          <h6>Corso</h6>
-          <h6>Start</h6>
-          <h6>End</h6>
-        </div>
-        <v-divider></v-divider>
-        <v-list class="pa-0">
-          <template v-for="(course, index) in pastCourses">
-            <v-list-item :key="index">
-              <v-list-item-icon>
-                {{course.name}}
-              </v-list-item-icon>
-              <v-list-item-content class="justify-end">
-                {{course.start_date}}
-              </v-list-item-content>
-              <v-list-item-content class="justify-end">
-                <v-btn color="red" class="white--text" v-if="editCourses" @click="reactivateCourse(course)">RIATTIVA</v-btn>
-                <span v-else class="text-end">{{course.end_date}}</span>
-              </v-list-item-content>
-            </v-list-item>
-            <v-divider :key="index"></v-divider>
+        <v-data-table
+          :headers="courseHeaders"
+          :items="pastCourses"
+          hide-default-footer
+          fixed-header
+          disable-pagination>
+          <template v-slot:[`item.type`]="{ item }">
+              <span>{{agreementEnumeration(item.type)}}</span>
           </template>
-        </v-list>
+          <template v-slot:[`item.unit`]="{ item }">
+            <span>{{item.unit}} {{formatType(item.type)}}</span>
+          </template>
+          <template v-slot:[`item.end_date`]="{ item }">
+            <span v-if="!editCourses"> on going</span>
+            <v-btn v-else color="red" class="white--text"  @click="reactivateCourse(item)">RIATTIVA</v-btn>
+          </template>
+        </v-data-table>
       </v-tab-item>
     </v-tabs-items>
   </v-card>
@@ -114,9 +105,10 @@
 <script>
 import Axios from 'axios'
 import { UpdatePayments } from '@/utility/updatePayments.js'
+import { TeacherAgreement } from '@/utility/enumerations.js'
 export default {
   name: 'CoursesCard',
-  props: ['studentCourses', 'editCourses', 'studentId'],
+  props: ['teacherCourses', 'editCourses', 'teacherId'],
   data: () => ({
     coursesTab: 0,
     activeCourses: [],
@@ -124,12 +116,37 @@ export default {
     addCourseField: false,
     addCourse: {
       id: undefined,
-      startingDate: undefined
+      startingDate: undefined,
+      type: undefined,
+      unit: undefined
     },
+    courseHeaders: [
+      {
+        text: 'Corso', align: 'start', sortable: false, value: 'name'
+      },
+      {
+        text: 'Accordo', align: 'start', sortable: true, value: 'type'
+      },
+      {
+        text: 'Di', align: 'start', sortable: true, value: 'unit'
+      },
+      {
+        text: 'Start', align: 'start', sortable: true, value: 'start_date'
+      },
+      {
+        text: 'End', align: 'start', sortable: true, value: 'end_date'
+      }
+    ],
+    typesList: [
+      { value: 0, text: 'Fisso Orario' },
+      { value: 1, text: 'Fisso Mensile' },
+      { value: 2, text: 'Percentuale' },
+      { value: 3, text: 'Affitto' }
+    ],
     coursesList: []
   }),
   watch: {
-    studentCourses () {
+    teacherCourses () {
       this.splitCourses()
     }
   },
@@ -137,8 +154,8 @@ export default {
     splitCourses () {
       this.activeCourses = []
       this.pastCourses = []
-      console.log('corsi', this.studentCourses)
-      this.studentCourses.forEach(element => {
+      console.log('corsi', this.teacherCourses)
+      this.teacherCourses.forEach(element => {
         if (element.active === 0) {
           this.activeCourses.push(element)
         } else {
@@ -153,45 +170,61 @@ export default {
     },
     undoEditCourse () {
       this.undoAddCourse()
-      console.log('CULO')
       this.$emit('undo-edit-courses')
     },
     undoAddCourse () {
       this.addCourse = {
         id: undefined,
-        startingDate: undefined
+        startingDate: undefined,
+        type: undefined,
+        unit: undefined
       }
       this.addCourseField = false
     },
     async saveNewCourse () {
       const newSubscription = {
-        student_id: this.studentId,
+        teacher_id: this.teacherId,
         course_id: this.addCourse.id,
+        type: this.addCourse.type,
+        unit: this.addCourse.unit,
         start_date: this.addCourse.startingDate
       }
       console.log({ newSubscription })
-      const response = (await Axios.post('http://localhost:8000/api/subscribe-student', newSubscription)).data
-      UpdatePayments.updateAllPaymentsTable()
+      const response = (await Axios.post('http://localhost:8000/api/hire-teacher', newSubscription)).data
+      UpdatePayments.updateAllSalariesTable()
       this.addCourseField = false
       this.$emit('update-course-list')
       console.log({ response })
     },
     async endCourse (courseId) {
       console.log({ courseId })
-      const response = (await Axios.post(`http://localhost:8000/api/unsubscribe-student/${courseId}`)).data
+      const response = (await Axios.post(`http://localhost:8000/api/fire-teacher/${courseId}`)).data
       this.$emit('update-course-list')
       console.log(response)
     },
     async reactivateCourse (course) {
       console.log({ course })
       const reactivateSubscription = {
-        subscription_id: course.id,
-        student_id: this.studentId,
+        subscription_id: course.courses_teachers_id,
+        teacher_id: this.teacherId,
         course_id: course.course_id
       }
-      const response = (await Axios.post('http://localhost:8000/api/resubscribe-student', reactivateSubscription)).data
+      console.log({ reactivateSubscription })
+      const response = (await Axios.post('http://localhost:8000/api/re-hire-teacher', reactivateSubscription)).data
       this.$emit('update-course-list')
       console.log(response)
+    },
+    agreementEnumeration (code) {
+      return TeacherAgreement.codeToLabel(code)
+    },
+    formatType (value) {
+      if (value === 0) {
+        return '€/h'
+      } else if (value === 1) {
+        return '€'
+      } else if (value === 2 || value === 3) {
+        return '%'
+      }
     }
   }
 }

@@ -38,8 +38,6 @@
             </span>
           </div>
         </div>
-
-
       </template>
       <template v-slot:[`item.gender`]="{ item }">
           <span>{{formatGender(item.gender)}}</span>
@@ -49,7 +47,7 @@
           <v-icon v-else color="red">mdi-alert-circle</v-icon>
       </template>
       <template v-slot:[`item.action`]="{ item }">
-          <v-btn :to="`/studente/${item.id}`">INFO</v-btn>
+          <v-btn :to="`/studente/${item.students_id}`">INFO</v-btn>
       </template>
     </v-data-table>
   </div>
@@ -108,7 +106,7 @@ export default {
       return GenderEnumeration.codeToLabel(gender)
     },
     getInitials (name, lastname) {
-      return name.charAt(0).toUpperCase() + lastname.charAt(0).toUpperCase() ;
+      return name.charAt(0).toUpperCase() + lastname.charAt(0).toUpperCase()
     }
   },
   created () {

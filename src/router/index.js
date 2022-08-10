@@ -52,7 +52,7 @@ const routes = [
   {
     path: '/corsi',
     name: 'Corsi',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Courses.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/courses/Courses.vue')
   }
 ]
 

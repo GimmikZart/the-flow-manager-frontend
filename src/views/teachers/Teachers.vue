@@ -26,7 +26,7 @@
       class="elevation-1 h-100"
     >
       <template v-slot:[`item.action`]="{ item }">
-          <v-btn :to="`/insegnante/${item.id}`">INFO</v-btn>
+          <v-btn :to="`/insegnante/${item.teachers_id}`">INFO</v-btn>
       </template>
     </v-data-table>
   </div>
@@ -70,7 +70,7 @@ export default {
   }),
   methods: {
     async getTeachers () {
-      this.teachers = (await Axios.get('http://localhost:8000/api/teachers')).data.data
+      this.teachers = (await Axios.get('http://localhost:8000/api/teachers')).data
       console.log(this.teachers)
     }
   },

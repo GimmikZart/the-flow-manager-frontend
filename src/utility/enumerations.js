@@ -14,6 +14,25 @@ export class GenderEnumeration {
   }
 }
 
+export class TeacherAgreement {
+  //  0 = fisso orario | 1 = % sul totale | 2 = affitto sala
+  static fissoOrario = 0
+  static fissoMensile = 1
+  static percentuale = 2
+  static affitto = 3
+
+  static Codes = [this.fissoOrario, this.fissoMensile, this.percentuale, this.affitto]
+  static Labels = ['Fisso Orario', 'Fisso mensile', 'Percentuale', 'Affitto']
+
+  static toSelectOptions (from, to) {
+    return enumToSelectOptions(this.Codes, this.Labels, from, to)
+  }
+
+  static codeToLabel (code) {
+    return enumCodeToLabel(this.Codes, this.Labels, code)
+  }
+}
+
 export class PaymentStatusEnumeration {
   static ok = 0
   static canceled = 1
