@@ -22,11 +22,12 @@
         <div v-if="addCourseField" class="mb-2 pa-5">
           <v-divider class="mb-3"></v-divider>
           <div class="d-flex">
-            <v-select class="w-100" label="Seleziona Corso" v-model="addCourse.id" outlined dense hide-details :items="coursesList" item-text="name" item-value="courses_id"></v-select>
+            <v-select class="w-100 ma-1" label="Seleziona Corso" v-model="addCourse.id" outlined dense hide-details :items="coursesList" item-text="name" item-value="courses_id"></v-select>
             <v-menu
               v-model="startingDatePicker"
               :close-on-content-click="false"
               :nudge-right="40"
+              hide-details
               transition="scale-transition"
               offset-y
               min-width="auto"
@@ -41,18 +42,21 @@
                   hide-details
                   v-bind="attrs"
                   v-on="on"
-                  class="w-100"
+                  class="w-100 ma-1"
                 ></v-text-field>
               </template>
               <v-date-picker
+                class="ma-1"
+                hide-details
                 v-model="addCourse.startingDate"
                 @input="startingDatePicker = false"
               ></v-date-picker>
             </v-menu>
           </div>
           <div class="d-flex">
-            <v-select class="w-100" label="Tipo di accordo" v-model="addCourse.type" outlined dense hide-details :items="typesList"></v-select>
-            <v-text-field type="num" v-model="addCourse.unit" label="Unità" outlined dense hide-details></v-text-field>
+            <v-select class="w-100 ma-1" label="Tipo di accordo" v-model="addCourse.type" outlined dense hide-details :items="typesList"></v-select>
+            <v-text-field class="w-50 ma-1" type="num" v-model="addCourse.workHours" label="Ore mensili" outlined dense hide-details></v-text-field>
+            <v-text-field class="w-50 ma-1" type="num" v-model="addCourse.unit" label="Unità" outlined dense hide-details></v-text-field>
           </div>
 
           <div class="d-flex mt-2">
@@ -187,6 +191,7 @@ export default {
         course_id: this.addCourse.id,
         type: this.addCourse.type,
         unit: this.addCourse.unit,
+        work_hours: this.addCourse.workHours,
         start_date: this.addCourse.startingDate
       }
       console.log({ newSubscription })

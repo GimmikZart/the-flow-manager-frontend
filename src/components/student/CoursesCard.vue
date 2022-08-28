@@ -74,7 +74,7 @@
                 {{course.start_date}}
               </v-list-item-content>
               <v-list-item-content class="justify-end">
-                <v-btn color="red" class="white--text" v-if="editCourses" @click="endCourse(course.id)">TERMINA</v-btn>
+                <v-btn color="red" class="white--text" v-if="editCourses" @click="endCourse(course.course_id)">TERMINA</v-btn>
                 <span v-else class="text-end">on going</span>
               </v-list-item-content>
             </v-list-item>

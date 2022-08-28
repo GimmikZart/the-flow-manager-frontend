@@ -38,8 +38,8 @@
                 {{payment.month}}/{{payment.year}}
               </v-list-item-content>
               <v-list-item-content class="justify-end">
-                <v-btn v-if="!editPayments" @click="payCourse(payment.id)">PAGA</v-btn>
-                <v-btn v-else @click="cancelPayment(payment.id)">ANNULLA</v-btn>
+                <v-btn v-if="!editPayments" @click="payCourse(payment.payments_id)">PAGA</v-btn>
+                <v-btn v-else @click="cancelPayment(payment.payments_id)">ANNULLA</v-btn>
               </v-list-item-content>
             </v-list-item>
             <v-divider :key="index"></v-divider>
@@ -72,7 +72,8 @@
                 {{payment.date_of_payment}}
               </v-list-item-content>
               <v-list-item-content class="justify-end">
-                {{formatStatus(payment.status) }}
+                <span class="text-end" v-if="!editPayments">{{formatStatus(payment.status) }}</span>
+                <v-btn v-else @click="undoPayment(payment.payments_id)">ANNULLA</v-btn>
               </v-list-item-content>
             </v-list-item>
             <v-divider :key="index"></v-divider>
@@ -109,6 +110,7 @@ export default {
           this.paidCourse.push(element)
         }
       })
+      console.log(this.unpayedCourse)
     },
     async payCourse (paymentId) {
       const response = await Axios.post(`http://localhost:8000/api/pay-course/${paymentId}`)
@@ -117,6 +119,11 @@ export default {
     },
     async cancelPayment (paymentId) {
       const response = await Axios.post(`http://localhost:8000/api/cancel-payment/${paymentId}`)
+      console.log({ response })
+      this.$emit('update-course-list')
+    },
+    async undoPayment (paymentId) {
+      const response = await Axios.post(`http://localhost:8000/api/undo-payment/${paymentId}`)
       console.log({ response })
       this.$emit('update-course-list')
     },
