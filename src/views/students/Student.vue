@@ -74,7 +74,7 @@ export default {
   }),
   methods: {
     async getStudent () {
-      this.student = (await Axios.get(`http://localhost:8000/api/student/${this.id}`)).data
+      this.student = (await Axios.get(`https://the-flow-manager-api.herokuapp.com/api/student/${this.id}`)).data
       this.editStudent = JSON.parse(JSON.stringify(this.student))
       console.log(this.student)
     }

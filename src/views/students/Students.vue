@@ -99,7 +99,7 @@ export default {
   }),
   methods: {
     async getStudents () {
-      this.students = (await Axios.get('http://localhost:8000/api/students')).data
+      this.students = (await Axios.get('https://the-flow-manager-api.herokuapp.com/api/students')).data
       console.log(this.students)
     },
     formatGender (gender) {

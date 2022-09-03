@@ -43,7 +43,7 @@ export default {
   }),
   methods: {
     async getCourses () {
-      this.courses = (await Axios.get('http://localhost:8000/api/courses')).data
+      this.courses = (await Axios.get('https://the-flow-manager-api.herokuapp.com/api/courses')).data
       console.log(this.courses)
     }
   },

@@ -129,7 +129,7 @@ export default {
   },
   methods: {
     async saveEditInfo () {
-      const response = await Axios.post('http://localhost:8000/api/teacher-edit', this.editTeacher)
+      const response = await Axios.post('https://the-flow-manager-api.herokuapp.com/api/teacher-edit', this.editTeacher)
       this.$emit('update-teacher-info', false)
       console.log(response)
     },

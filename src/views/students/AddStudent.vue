@@ -152,7 +152,7 @@ export default {
         registered: this.registered
       }
       console.log(object)
-      const response = await Axios.post('http://localhost:8000/api/student-create', object)
+      const response = await Axios.post('https://the-flow-manager-api.herokuapp.com/api/student-create', object)
       console.log({ response })
     }
   }

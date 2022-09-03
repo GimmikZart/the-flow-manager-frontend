@@ -148,7 +148,7 @@ export default {
     },
     async createCourseField () {
       this.addCourseField = true
-      this.coursesList = (await Axios.get('http://localhost:8000/api/list-courses')).data
+      this.coursesList = (await Axios.get('https://the-flow-manager-api.herokuapp.com/api/list-courses')).data
       console.log(this.coursesList)
     },
     undoEditCourse () {
@@ -170,7 +170,7 @@ export default {
         start_date: this.addCourse.startingDate
       }
       console.log({ newSubscription })
-      const response = (await Axios.post('http://localhost:8000/api/subscribe-student', newSubscription)).data
+      const response = (await Axios.post('https://the-flow-manager-api.herokuapp.com/api/subscribe-student', newSubscription)).data
       UpdatePayments.updateAllPaymentsTable()
       this.addCourseField = false
       this.$emit('update-course-list')
@@ -178,7 +178,7 @@ export default {
     },
     async endCourse (courseId) {
       console.log({ courseId })
-      const response = (await Axios.post(`http://localhost:8000/api/unsubscribe-student/${courseId}`)).data
+      const response = (await Axios.post(`https://the-flow-manager-api.herokuapp.com/api/unsubscribe-student/${courseId}`)).data
       this.$emit('update-course-list')
       console.log(response)
     },
@@ -189,7 +189,7 @@ export default {
         student_id: this.studentId,
         course_id: course.course_id
       }
-      const response = (await Axios.post('http://localhost:8000/api/resubscribe-student', reactivateSubscription)).data
+      const response = (await Axios.post('https://the-flow-manager-api.herokuapp.com/api/resubscribe-student', reactivateSubscription)).data
       this.$emit('update-course-list')
       console.log(response)
     }

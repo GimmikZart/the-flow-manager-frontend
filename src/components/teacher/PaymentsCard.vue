@@ -122,17 +122,17 @@ export default {
         paymentId: paymentId,
         value: value
       }
-      const response = await Axios.post('http://localhost:8000/api/pay-salary', data)
+      const response = await Axios.post('https://the-flow-manager-api.herokuapp.com/api/pay-salary', data)
       console.log({ response })
       this.$emit('update-course-list')
     },
     async cancelPayment (paymentId) {
-      const response = await Axios.post(`http://localhost:8000/api/cancel-salary/${paymentId}`)
+      const response = await Axios.post(`https://the-flow-manager-api.herokuapp.com/api/cancel-salary/${paymentId}`)
       console.log({ response })
       this.$emit('update-course-list')
     },
     async undoPayment (paymentId) {
-      const response = await Axios.post(`http://localhost:8000/api/undo-salary/${paymentId}`)
+      const response = await Axios.post(`https://the-flow-manager-api.herokuapp.com/api/undo-salary/${paymentId}`)
       console.log({ response })
       this.$emit('update-course-list')
     },

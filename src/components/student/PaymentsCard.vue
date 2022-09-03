@@ -113,17 +113,17 @@ export default {
       console.log(this.unpayedCourse)
     },
     async payCourse (paymentId) {
-      const response = await Axios.post(`http://localhost:8000/api/pay-course/${paymentId}`)
+      const response = await Axios.post(`https://the-flow-manager-api.herokuapp.com/api/pay-course/${paymentId}`)
       console.log({ response })
       this.$emit('update-course-list')
     },
     async cancelPayment (paymentId) {
-      const response = await Axios.post(`http://localhost:8000/api/cancel-payment/${paymentId}`)
+      const response = await Axios.post(`https://the-flow-manager-api.herokuapp.com/api/cancel-payment/${paymentId}`)
       console.log({ response })
       this.$emit('update-course-list')
     },
     async undoPayment (paymentId) {
-      const response = await Axios.post(`http://localhost:8000/api/undo-payment/${paymentId}`)
+      const response = await Axios.post(`https://the-flow-manager-api.herokuapp.com/api/undo-payment/${paymentId}`)
       console.log({ response })
       this.$emit('update-course-list')
     },

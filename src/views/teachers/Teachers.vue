@@ -70,7 +70,7 @@ export default {
   }),
   methods: {
     async getTeachers () {
-      this.teachers = (await Axios.get('http://localhost:8000/api/teachers')).data
+      this.teachers = (await Axios.get('https://the-flow-manager-api.herokuapp.com/api/teachers')).data
       console.log(this.teachers)
     }
   },
