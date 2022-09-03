@@ -73,6 +73,9 @@ export default {
         text: 'Genere', align: 'start', sortable: true, value: 'gender'
       },
       {
+        text: 'Codice Fiscale', align: 'start', sortable: true, value: 'fiscalCode'
+      },
+      {
         text: 'Data di nascita', align: 'start', sortable: false, value: 'dateOfBirth'
       },
       {

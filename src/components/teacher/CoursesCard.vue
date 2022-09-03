@@ -129,16 +129,19 @@ export default {
         text: 'Corso', align: 'start', sortable: false, value: 'name'
       },
       {
-        text: 'Accordo', align: 'start', sortable: true, value: 'type'
+        text: 'Accordo', align: 'start', sortable: false, value: 'type'
       },
       {
-        text: 'Di', align: 'start', sortable: true, value: 'unit'
+        text: 'Di', align: 'start', sortable: false, value: 'unit'
       },
       {
-        text: 'Start', align: 'start', sortable: true, value: 'start_date'
+        text: 'Ore', align: 'start', sortable: false, value: 'work_hours'
       },
       {
-        text: 'End', align: 'start', sortable: true, value: 'end_date'
+        text: 'Start', align: 'start', sortable: false, value: 'start_date'
+      },
+      {
+        text: 'End', align: 'start', sortable: false, value: 'end_date'
       }
     ],
     typesList: [
