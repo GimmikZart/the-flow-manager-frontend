@@ -47,10 +47,10 @@ export default {
         text: 'Prezzo', align: 'center', sortable: false, value: 'price'
       },
       {
-        text: 'Studenti totali', align: 'center', sortable: false, value: 'totalStudents'
+        text: 'Studenti attivi', align: 'center', sortable: false, value: 'activeStudents'
       },
       {
-        text: 'Studenti attivi', align: 'center', sortable: false, value: 'activeStudents'
+        text: 'Studenti totali', align: 'center', sortable: false, value: 'totalStudents'
       },
       {
         text: 'Action', align: 'center', sortable: false, value: 'action'

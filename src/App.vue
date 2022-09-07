@@ -11,7 +11,6 @@
           </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
-      <v-btn @click="updatePayments()">AGGIORNA</v-btn>
       <v-divider></v-divider>
 
       <v-list
@@ -61,6 +60,12 @@ export default {
       console.log({ paymentsResponse })
       console.log({ salariesResponse })
     }
+  },
+  created () {
+    this.updatePayments()
+  },
+  updated () {
+    this.updatePayments()
   }
 }
 </script>
